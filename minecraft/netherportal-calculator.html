@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gamepedia - Minecraft</title>
+</head>
+
+<script>
+    function overworldnether() {
+        const inputoverworldnether1 = document.getElementById("numberInputoverworldnether1").value;
+        const inputoverworldnether2 = document.getElementById("numberInputoverworldnether2").value;
+        const resultoverworldnether1 = Math.round(inputoverworldnether1 / 8);
+        const resultoverworldnether2 = Math.round(inputoverworldnether2 / 8);
+        document.getElementById("resultOutputoverworldnether1").innerText = "X coordinate in the Nether: " + resultoverworldnether1;
+        document.getElementById("resultOutputoverworldnether2").innerText = "Z coordinate in the Nether: " + resultoverworldnether2;
+    }
+    function netheroverworld() {
+        const inputnetheroverworld1 = document.getElementById("numberInputnetheroverworld1").value;
+        const inputnetheroverworld2 = document.getElementById("numberInputnetheroverworld2").value;
+        const resultnetheroverworld1 = Math.round(inputnetheroverworld1 * 8);
+        const resultnetheroverworld2 = Math.round(inputnetheroverworld2 * 8);
+        document.getElementById("resultOutputnetheroverworld1").innerText = "X coordinate in the Overworld: " + resultnetheroverworld1;
+        document.getElementById("resultOutputnetheroverworld2").innerText = "Z coordinate in the Overworld: " + resultnetheroverworld2;
+    }
+</script>
+
+<style>
+    body {
+        margin: 10px;
+    }
+    
+    .content {
+        margin: 30px;
+    }
+
+    .footer {
+        text-align: center;
+        font-size: 80%;
+    }
+
+    .footer-link {
+        margin-inline: 5px;
+    }
+
+    .gap {
+        height: 100px;
+    }
+
+    .discription {
+        font-size: 80%;
+    }
+</style>
+
+<body>
+    <div>
+        <h1 class="header">
+            Netherportal Calculator
+        </h1>
+    </div>
+    <div class="content">
+        <div>
+            <p>In both calculations the Y coordinate is useless, you can place you portal on any hight you want.</p>
+        </div>
+        <div>
+            <h2>
+                Overworld -> Nether
+            </h2>
+            <p>
+                Use this when your Portal is standing in the Overworld and you need the coordinates for a linked portal in the Nether:
+            </p>
+        </div>
+        <div>
+            <label for="numberInputoverworldnether1">X coordinate in the Overworld:</label>
+            <input type="number" id="numberInputoverworldnether1"><br>
+            <label for="numberInputoverworldnether2">Z coordinate in the Overworld:</label>
+            <input type="number" id="numberInputoverworldnether2"><br>
+            <button onclick="overworldnether()">Calculate</button>
+            <p id="resultOutputoverworldnether1"></p>
+            <p id="resultOutputoverworldnether2"></p>
+        </div>
+        <div class="gap"></div>
+        <div>
+            <h2>
+                Nether -> Overworld
+            </h2>
+            <p>
+                Use this when your Portal is standing in the Nether and you need the coordinates for a linked portal in the Overworld:
+            </p>
+        </div>
+        <div>
+            <label for="numberInputnetheroverworld1">X coordinate in the Nether:</label>
+            <input type="number" id="numberInputnetheroverworld1"><br>
+            <label for="numberInputnetheroverworld2">Z coordinate in the Nether:</label>
+            <input type="number" id="numberInputnetheroverworld2"><br>
+            <button onclick="netheroverworld()">Calculate</button>
+            <p id="resultOutputnetheroverworld1"></p>
+            <p id="resultOutputnetheroverworld2"></p>
+        </div>
+        <div class="gap"></div>
+        <div class="discription">
+            <p>
+                Last update: 26. Mai 2024
+            </p>
+            <p>
+                Client Version: 1.20.6 and below (above is not tested but can work)
+            </p>
+        </div>
+    </div>
+    <div class="footer">
+        <a class="footer-link" href="/minecraft.html">Back</a>
+        <a class="footer-link" href="/index.html">Home</a>
+        <a class="footer-link" href="/copyright.html">copyright</a>
+        <a class="footer-link" href="/contackt.html">contackt</a>
+    </div>
+</body>
+</html>

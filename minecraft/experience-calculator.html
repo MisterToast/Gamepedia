@@ -1,0 +1,664 @@
+<html>
+    <head>
+        <link rel="stylesheet" type="text/css" href="./style.css">
+        <title>Gamepedia - Minecraft</title>
+        <link id="nordvpn-contentScript-extension-fonts" rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato">
+    </head>
+
+<script type="text/javascript">
+    function val(id) {
+        return document.getElementById(id).value;
+    }
+    function setText(id,s) {
+        document.getElementById(id).innerHTML = s + "";
+    }
+    function calcAll() {
+        var curLevel = parseFloat(val("curLevel"));
+        var targetLevel = parseFloat(val("targetLevel"));
+        curXp = levelXp(curLevel);
+        targetXp = levelXp(targetLevel);
+        var leftXp = targetXp - curXp;
+        
+        setText("currentXp", curXp);
+        setText("targetXp", targetXp);
+        setText("leftXp", leftXp);
+        calcOne("slimeTiny", 1.0);
+        calcOne("slimeSmall", 2.0);
+        calcOne("slimeBig", 4.0);
+        calcOne("blaze", 10.0);
+        calcOne("dragon", 12000.0);
+        calcOne("hostile", 5.0);
+        calcOne("animal", 2.0);
+        calcOne("oreCoal", 1.0);
+        calcOne("oreRedstone", 3.0);
+        calcOne("oreLapis", 3.5);
+        calcOne("oreEmerald", 5.0);
+        calcOne("oreDiamond", 5.0);
+        calcOne("stone", 0.1);
+        calcOne("glass", 0.1);
+        calcOne("coal", 0.1);
+        calcOne("brick", 0.2);
+        calcOne("cactusDye", 0.2);
+        calcOne("lapisLazuli", 0.2);
+        calcOne("cookedFood", 0.3);
+        calcOne("redstone", 0.7);
+        calcOne("iron", 0.7);
+        calcOne("gold", 1.0);
+        calcOne("diamond", 1.0);
+        calcOne("potion", 7.0);
+        calcOne("spawner", 29.0);
+    }
+    
+    function calcOne(what, xpEach) {
+        var count = Math.ceil((targetXp - curXp) / xpEach);
+        setText(what + "Count", count);
+    }
+    
+    function levelXp(level) {
+        var whole = Math.floor(level);
+        var partial = level - whole;
+        
+        var wholeXp = wholeLevelXp(whole);
+        var nextXp = wholeLevelXp(whole + 1) - wholeXp;
+        var partialXp = nextXp * partial;
+        
+        return wholeXp + partialXp;
+    }
+    
+    function wholeLevelXp(whole) {
+        var low = whole;
+        var mid = Math.max(0, whole - 15);
+        var high = Math.max(0, whole - 30);
+        
+        return low * 17
+            + (mid * (mid - 1) / 2) * 3
+            + (high * (high - 1) / 2) * 7;
+    }
+</script>
+
+<style>
+        body {
+        margin: 10px;
+    }
+    
+    .content {
+        margin: 30px;
+    }
+
+    .footer {
+        text-align: center;
+        font-size: 80%;
+    }
+
+    .footer-link {
+        margin-inline: 5px;
+    }
+
+    .gap {
+        height: 100px;
+    }
+
+    table {
+        width: 30%;
+        border-collapse: collapse;
+        border: 1px solid black;
+        table-layout: fixed;
+    }
+    th, td {
+        border: 1px solid black;
+        padding: 8px;
+        text-align: center;
+    }
+    th {
+        text-decoration: underline;
+    }
+
+    .discription {
+        font-size: 80%;
+    }
+</style>
+
+<body>
+    
+    <div class="header">
+        <h1>Minecraft Experience Calculator</h1>
+    </div>
+    
+    <div class="content">
+        <p>
+            Enter your current level and the level you want to reach.
+        </p>
+        <form>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>
+                            Current Level:
+                        </td>
+                        <td>
+                            <input id="curLevel" type="number" size="45">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            Target Level:
+                        </td>
+                        <td>
+                            <input id="targetLevel" type="number" size="45">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="text-align:center">
+                            <input type="button" value="Calculate" onclick="calcAll();">
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+        <br>
+        <table>
+            <tbody>
+                <tr>
+                    <td>
+                        Current XP
+                    </td>
+                    <td style="text-align: right; width: 4em">
+                        <span id="currentXp">
+                            0
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Target XP
+                    </td>
+                    <td style="text-align: right">
+                        <span id="targetXp">
+                            29315
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        XP Remaining
+                    </td>
+                    <td style="text-align: right">
+                        <span id="leftXp">
+                            29315
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="gap"></div>
+        <br>
+        <table>
+            <tbody>
+                <tr>
+                    <th>
+                        Mob
+                    </th>
+                    <th colspan="2">
+                        XP per action
+                    </th>
+                    <th>
+                        Actions needed
+                    </th>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <table>
+            <tbody>
+                <tr>
+                    <th colspan="4">
+                        Mob Kills
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        Tiny Slime
+                    </td>
+                    <td style="text-align: right">
+                        1.0
+                    </td>
+                    <td>
+
+                    </td>
+                    <td style="text-align: right">
+                        <span id="slimeTinyCount">
+                            29315
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Small Slime
+                    </td>
+                    <td style="text-align: right">
+                        2.0
+                    </td>
+                    <td>
+
+                    </td>
+                    <td style="text-align: right">
+                        <span id="slimeSmallCount">
+                            14658
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Big Slime
+                    </td>
+                    <td style="text-align: right">
+                        4.0
+                    </td>
+                    <td>
+
+                    </td>
+                    <td style="text-align: right">
+                        <span id="slimeBigCount">
+                            7329
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Blaze
+                    </td>
+                    <td style="text-align: right">
+                        10.0
+                    </td>
+                    <td>
+
+                    </td>
+                    <td style="text-align: right">
+                        <span id="blazeCount">
+                            2932
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Ender Dragon
+                    </td>
+                    <td style="text-align: right">
+                        12000.0
+                    </td>
+                    <td>
+
+                    </td>
+                    <td style="text-align: right">
+                        <span id="dragonCount">
+                            3
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Other Hostile
+                    </td>
+                    <td style="text-align: right">
+                        5.0
+                    </td>
+                    <td>
+
+                    </td>
+                    <td style="text-align: right">
+                        <span id="hostileCount">
+                            5863
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Animals
+                    </td>
+                    <td style="text-align: right">
+                        2.0
+                    </td>
+                    <td>
+                        (1.0 - 3.0)
+                    </td>
+                    <td style="text-align: right">
+                        <span id="animalCount">
+                            14658
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <table>
+            <tbody>
+                <tr>
+                    <th colspan="4">
+                        Mining
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        Coal Ore
+                    </td>
+                    <td style="text-align: right">
+                        1.0
+                    </td>
+                    <td>
+                        (0.0 - 2.0)
+                    </td>
+                    <td style="text-align: right">
+                        <span id="oreCoalCount">
+                            29315
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Redstone Ore
+                    </td>
+                    <td style="text-align: right">
+                        3.0
+                    </td>
+                    <td>
+                        (1.0 - 5.0)
+                    </td>
+                    <td style="text-align: right">
+                        <span id="oreRedstoneCount">
+                            9772
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Lapis Lazuli Ore
+                    </td>
+                    <td style="text-align: right">
+                        3.5
+                    </td>
+                    <td>
+                        (2.0 - 5.0)
+                    </td>
+                    <td style="text-align: right">
+                        <span id="oreLapisCount">
+                            8376
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Emerald Ore
+                    </td>
+                    <td style="text-align: right">
+                        5.0
+                    </td>
+                    <td>
+                        (3.0 - 7.0)
+                    </td>
+                    <td style="text-align: right">
+                        <span id="oreEmeraldCount">
+                            5863
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Diamond Ore
+                    </td>
+                    <td style="text-align: right">
+                        5.0
+                    </td>
+                    <td>
+                        (3.0 - 7.0)
+                    </td>
+                    <td style="text-align: right">
+                        <span id="oreDiamondCount">
+                            5863
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <table>
+            <tbody>
+                <tr>
+                    <th colspan="4">
+                        Smelting
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        Smooth Stone
+                    </td>
+                    <td style="text-align: right">
+                        0.1
+                    </td>
+                    <td>
+
+                    </td>
+                    <td style="text-align: right">
+                        <span id="stoneCount">
+                            293150
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Glass
+                    </td>
+                    <td style="text-align: right">
+                        0.1
+                    </td>
+                    <td>
+
+                    </td>
+                    <td style="text-align: right">
+                        <span id="glassCount">293150</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Coal/Charcoal
+                    </td>
+                    <td style="text-align: right">
+                        0.1
+                    </td>
+                    <td>
+
+                    </td>
+                    <td style="text-align: right">
+                        <span id="coalCount">
+                            293150
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Brick
+                    </td>
+                    <td style="text-align: right">
+                        0.2
+                    </td>
+                    <td>
+
+                    </td>
+                    <td style="text-align: right">
+                        <span id="brickCount">
+                            146575
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Green Dye
+                    </td>
+                    <td style="text-align: right">
+                        0.2
+                    </td>
+                    <td>
+
+                    </td>
+                    <td style="text-align: right">
+                        <span id="cactusDyeCount">
+                            146575
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Lapis Lazuli
+                    </td>
+                    <td style="text-align: right">
+                        0.2
+                    </td>
+                    <td>
+
+                    </td>
+                    <td style="text-align: right">
+                        <span id="lapisLazuliCount">
+                            146575
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Cooked Food
+                    </td>
+                    <td style="text-align: right">
+                        0.3
+                    </td>
+                    <td>
+
+                    </td>
+                    <td style="text-align: right">
+                        <span id="cookedFoodCount">
+                            97717
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Redstone
+                    </td>
+                    <td style="text-align: right">
+                        0.7
+                    </td>
+                    <td>
+
+                    </td>
+                    <td style="text-align: right">
+                        <span id="redstoneCount">
+                            41879
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Iron
+                    </td>
+                    <td style="text-align: right">
+                        0.7
+                    </td>
+                    <td>
+
+                    </td>
+                    <td style="text-align: right">
+                        <span id="ironCount">
+                            41879
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Gold
+                    </td>
+                    <td style="text-align: right">
+                        1.0
+                    </td>
+                    <td>
+
+                    </td>
+                    <td style="text-align: right">
+                        <span id="goldCount">
+                            29315
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Diamond
+                    </td>
+                    <td style="text-align: right">
+                        1.0
+                    </td>
+                    <td>
+
+                    </td>
+                    <td style="text-align: right">
+                        <span id="diamondCount">
+                            29315
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <br>
+        <table>
+            <tbody>
+                <tr>
+                    <th colspan="4">
+                        Other
+                    </th>
+                </tr>
+                <tr>
+                    <td>
+                        Bottle o' Enchanting
+                    </td>
+                    <td style="text-align: right">
+                        7.0
+                    </td>
+                    <td>
+                        (3.0 - 11.0)
+                    </td>
+                    <td style="text-align: right">
+                        <span id="potionCount">
+                            4188
+                        </span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Mob Spawner
+                    </td>
+                    <td style="text-align: right">
+                        29.0
+                    </td>
+                    <td>
+                        (15.0 - 43.0)
+                    </td>
+                    <td style="text-align: right">
+                        <span id="spawnerCount">
+                            1011
+                        </span>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="discription">
+        <p>
+            Last update: 27. Mai 2024
+        </p>
+        <p>
+            Client Version: 1.20.6 and below (above is not tested but can work)
+        </p>
+    </div>
+    <div class="footer">
+        <a class="footer-link" href="/minecraft.html">Back</a>
+        <a class="footer-link" href="/index.html">Home</a>
+        <a class="footer-link" href="/copyright.html">copyright</a>
+        <a class="footer-link" href="/contackt.html">contackt</a>
+    </div>
+</body>
+</html>
